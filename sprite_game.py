@@ -7,7 +7,7 @@ class Meteorite(pg.sprite.Sprite):
     def __init__(self):
         pg.sprite.Sprite.__init__(self)
 
-        self.image = pg.image.load("meteorite.png")
+        self.image = pg.image.load("meteor.png")
         size = random.randint(70, 150)
 
         self.image = pg.transform.scale(self.image, (size, size))
@@ -15,8 +15,11 @@ class Meteorite(pg.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.topleft = (800, random.randint(0, 600 - size))
 
+        self.speedx = random.randint(1, 3)
     def update(self):
-        ...
+        self.rect.x -= self.speedx
+
+
 
 
 class Mouse_starship(pg.sprite.Sprite):
@@ -60,7 +63,7 @@ class Starship(pg.sprite.Sprite):
     def __init__(self):
         pg.sprite.Sprite.__init__(self)
 
-        self.image = pg.image.load("cat_starship_horizontal.png")
+        self.image = pg.image.load("starship_reverse.png")
         self.image = pg.transform.scale(self.image, (100, 100))
         self.image = pg.transform.flip(self.image, False, True)
 
@@ -68,6 +71,8 @@ class Starship(pg.sprite.Sprite):
         self.rect.midleft = (0, 300)
 
         self.mode = "vertical"
+
+
 
     def update(self):
         keys = pg.key.get_pressed()

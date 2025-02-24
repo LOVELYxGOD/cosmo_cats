@@ -1,3 +1,5 @@
+import random
+
 import pygame as pg
 import time
 from sprite_game import *
@@ -41,6 +43,7 @@ f1 = pg.font.Font('Космические коты - шрифт.otf', 25)
 
 captain = Captain()
 alien = Alien()
+starship = Starship()
 
 start_text = ["Мы засекли сигнал с планеты Мур.",
               "",
@@ -114,7 +117,17 @@ while is_running:
 
 
     if mode == "meteorites":
-        ...
+
+        if random.randint(1, 30) == 1:
+            meteorites.add(Meteorite())
+
+        starship.update()
+        meteorites.update()
+
+        screen.blit(space, (0, 0))
+        screen.blit(starship.image, starship.rect)
+
+        meteorites.draw(screen)
 
     if mode == "alien_scene":
         dialogue_mode(alien, alien_text)
