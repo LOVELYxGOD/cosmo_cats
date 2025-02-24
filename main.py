@@ -1,12 +1,11 @@
 import pygame as pg
 import time
-from sprite import *
-
+from sprite_game import *
 
 def dialogue_mode(sprite, text):
-    sprite.ubdate()
+    sprite.update()
     screen.blit(space, (0, 0))
-    screen.blit(sprite.image, sprite.cord)
+    screen.blit(sprite.image, sprite.rect)
 
     text1 = f1.render(text[text_number], True, pg.Color('white'))
     screen.blit(text1, (280, 450))
