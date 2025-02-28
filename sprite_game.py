@@ -16,8 +16,11 @@ class Meteorite(pg.sprite.Sprite):
         self.rect.topleft = (800, random.randint(0, 600 - size))
 
         self.speedx = random.randint(1, 3)
+        self.speedy = random.randint(1, 1)
     def update(self):
         self.rect.x -= self.speedx
+        self.rect.y += self.speedy
+
 
 
 

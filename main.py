@@ -38,6 +38,12 @@ lasers = pg.sprite.Group()
 space = pg.image.load('Космические коты - фон.png').convert()
 space = pg.transform.scale(space, size)
 
+
+
+heart = pg.image.load('heart.png').convert_alpha()
+heart = pg.transform.scale(heart, (30, 30))
+heart_count = 3
+
 text_number = 0
 f1 = pg.font.Font('Космические коты - шрифт.otf', 25)
 
@@ -92,6 +98,7 @@ while is_running:
                 if text_number > len(start_text):
                     text_number = 0
                     mode = 'meteorites'
+                    start_time = time.time()
 
             if mode == 'alien_scene':
                 text_number += 2
@@ -117,17 +124,28 @@ while is_running:
 
 
     if mode == "meteorites":
+        if time.time() - start_time > 20.0:
+            mode = 'alien_scene'
 
-        if random.randint(1, 30) == 1:
+        if random.randint(1, 70) == 1:
             meteorites.add(Meteorite())
 
         starship.update()
         meteorites.update()
 
+        hits = pg.sprite.spritecollide(starship, meteorites, True)
+        for hit in hits:
+            heart_count -= 1
+            if heart_count <= 0:
+                is_running = False
+
         screen.blit(space, (0, 0))
         screen.blit(starship.image, starship.rect)
 
         meteorites.draw(screen)
+
+        for i in range(heart_count):
+            screen.blit(heart, (i * 30, 0))
 
     if mode == "alien_scene":
         dialogue_mode(alien, alien_text)
