@@ -29,7 +29,7 @@ class Mouse_starship(pg.sprite.Sprite):
     def __init__(self):
         pg.sprite.Sprite.__init__(self)
 
-        self.image = pg.image.load("mouse_starship.png")
+        self.image = pg.image.load("enemy.png")
         size = random.randint(70, 150)
 
         self.image = pg.transform.scale(self.image, (size, size))
@@ -92,7 +92,7 @@ class Starship(pg.sprite.Sprite):
                 self.rect.y += 1
 
     def switch_mode(self):
-        self.image = pg.image.load("cat_starship.png")
+        self.image = pg.image.load("starship.png")
         self.image = pg.transform.scale(self.image, (100, 100))
 
         self.rect = self.image.get_rect()
