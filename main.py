@@ -85,6 +85,15 @@ final_text = ["Огромное вам спасибо,",
               ""]
 
 
+pg.mixer.music.load('theme.wav')
+pg.mixer.music.set_volume(0.1)
+pg.mixer.music.play()
+
+laser_sound = pg.mixer.Sound('laser_sound.wav')
+laser_sound.set_volume(0.2)
+victory = pg.mixer.Sound('victory_sound.wav')
+victory.set_volume(0.2)
+
 
 while is_running:
 
@@ -113,6 +122,8 @@ while is_running:
             if mode == 'moon':
                 if event.key == pg.K_SPACE:
                     lasers.add(Laser(starship.rect.midtop))
+                    laser_sound.play()
+
 
             if mode == 'final_scene':
                 text_number += 2
@@ -130,7 +141,7 @@ while is_running:
 
 
     if mode == "meteorites":
-        if time.time() - start_time > 3.0:
+        if time.time() - start_time > 20.0:
             mode = 'alien_scene'
 
         if random.randint(1, 70) == 1:
@@ -157,8 +168,10 @@ while is_running:
         dialogue_mode(alien, alien_text)
 
     if mode == "moon":
-        if time.time() - start_time > 5.0:
-            mode = 'alien_scene' #ТУТ НАДО БУДЕТ ИСПРАВИТЬ
+        if time.time() - start_time > 20.0:
+            mode = 'final_scene'
+            pg.mixer.music.fadeout(3)
+            victory.play()
 
         if random.randint(1, 70) == 1:
             mice.add(Mouse_starship())
@@ -190,3 +203,5 @@ while is_running:
 
     pg.display.flip()
     clock.tick(FPS)
+
+    #исправить баг с жизнью
