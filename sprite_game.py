@@ -137,3 +137,4 @@ class Alien(pg.sprite.Sprite):
             self.rect.y -= 3
             if self.rect.y <= 300:
                 self.mode = "stay"
+

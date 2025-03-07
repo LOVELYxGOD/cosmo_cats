@@ -17,13 +17,23 @@ def dialogue_mode(sprite, text):
         screen.blit(text2, (280, 480))
 
 
-
 pg.init()
 pg.mixer.init()
 
 size = (800, 600)
 screen = pg.display.set_mode(size)
 pg.display.set_caption("Космические коты")
+
+def defeat_mode():
+    defeat_screen = pg.image.load('defeat.png').convert()
+    defeat_screen = pg.transform.scale(defeat_screen, size)
+    pg.mixer.music.fadeout(3)
+    defeat_song = pg.mixer.Sound('defeat_song.mp3')
+    defeat_song.set_volume(0.1)
+    pg.mixer.Sound.play(defeat_song)
+    screen.blit(defeat_screen, (0, 0))
+
+
 
 FPS = 120
 clock = pg.time.Clock()
@@ -151,10 +161,13 @@ while is_running:
         meteorites.update()
 
         hits = pg.sprite.spritecollide(starship, meteorites, True)
+
         for hit in hits:
             heart_count -= 1
-            if heart_count <= 0:
-                is_running = False
+            if heart_count < 1:
+                defeat_mode()
+                print('no')
+                mode = 'defeat'
 
         screen.blit(space, (0, 0))
         screen.blit(starship.image, starship.rect)
@@ -184,7 +197,7 @@ while is_running:
 
         for hit in hits:
             heart_count -= 1
-            if heart_count <= 0:
+            if heart_count < 1:
                 is_running = False
 
         hits = pg.sprite.groupcollide(lasers, mice,True, True)
@@ -201,7 +214,11 @@ while is_running:
     if mode == "final_scene":
         dialogue_mode(alien, final_text)
 
+    if mode == 'defeat':
+        defeat_mode()
+
+
+
     pg.display.flip()
     clock.tick(FPS)
 
-    #исправить баг с жизнью
